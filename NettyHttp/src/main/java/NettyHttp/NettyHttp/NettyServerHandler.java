@@ -24,7 +24,6 @@ import java.net.InetAddress;
 * @date 2018-4-17
  */
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
-	//private String result="";
 	/*
 	 * 收到消息时，返回信息
 	 */
@@ -46,13 +45,11 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 			String path=httpRequest.uri();			//获取路径
 			String body = getBody(httpRequest); 	//获取参数
 			HttpMethod method=httpRequest.method();//获取请求方法
-			//如果不是这个路径，就直接返回错误
+			//如果不是这个路径，则不处理，直接退出
 			if(!path.contains("/pay")){
-				//result="非法请求!";
-				//send(ctx,result,HttpResponseStatus.BAD_REQUEST);
 				return;
 			}
-			//如果是GET请求
+			//GET请求
 			if(HttpMethod.GET.equals(method)){ 
 				//接受到的消息，做业务逻辑处理...
 				System.out.println("body:"+path.substring(5));
@@ -87,7 +84,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 				send(ctx,result,HttpResponseStatus.OK,path);
 				return;
 			}
-			//如果是POST请求
+			//POST请求
 			if(HttpMethod.POST.equals(method)){ 
 				//接受到的消息，做业务逻辑处理...
 				System.out.println("body:"+body);
